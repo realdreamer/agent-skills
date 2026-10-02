@@ -1,0 +1,82 @@
+[
+  {
+    "query": "this processPayment function in src/payments/charge.ts has like 6 levels of nested ifs, can you flatten it so it's easier to read?",
+    "should_trigger": true
+  },
+  {
+    "query": "sonar is failing the build with 'Refactor this function to reduce its Cognitive Complexity from 24 to the 15 allowed' on src/handlers/sync.ts, fix it",
+    "should_trigger": true
+  },
+  {
+    "query": "why is my reducer in store/cart.ts flagged as too complex? it's just a switch with some ifs",
+    "should_trigger": true
+  },
+  {
+    "query": "before I open the PR, check the files I changed for any functions that are getting too complex",
+    "should_trigger": true
+  },
+  {
+    "query": "Biome is complaining about noExcessiveCognitiveComplexity in utils/dates.ts, what's the cleanest way to fix it",
+    "should_trigger": true
+  },
+  {
+    "query": "write a lambda handler in typescript that validates the webhook signature, dedupes by event id in dynamodb and fans out to SQS. keep it readable, our lint enforces cognitive complexity 10",
+    "should_trigger": true
+  },
+  {
+    "query": "can you score the cognitive complexity of every function under packages/api/src and list the worst ten?",
+    "should_trigger": true
+  },
+  {
+    "query": "this express middleware is a mess of nested callbacks and .then chains, refactor it so a new dev can follow it",
+    "should_trigger": true
+  },
+  {
+    "query": "explain line by line what makes buildQuery() in repo/search.ts score so high on complexity",
+    "should_trigger": true
+  },
+  {
+    "query": "add a CI step that fails if any TS function goes over cognitive complexity 15",
+    "should_trigger": true
+  },
+  {
+    "query": "what's the time complexity of this function that finds duplicate ids in an array? can it be O(n)?",
+    "should_trigger": false
+  },
+  {
+    "query": "TypeScript says 'Expression produces a union type that is too complex to represent' on my DeepPartial type, how do I fix it",
+    "should_trigger": false
+  },
+  {
+    "query": "compute the cyclomatic complexity of the functions in my python service with radon and summarize it",
+    "should_trigger": false
+  },
+  {
+    "query": "my React list re-renders on every keystroke and feels slow, how do I stop the unnecessary renders?",
+    "should_trigger": false
+  },
+  {
+    "query": "ESLint keeps reporting no-unused-vars and no-explicit-any across src/, clean those up",
+    "should_trigger": false
+  },
+  {
+    "query": "rename the getUserData function to fetchUserProfile everywhere in the codebase",
+    "should_trigger": false
+  },
+  {
+    "query": "write jest unit tests for the calculateDiscount function in pricing.ts, cover the edge cases",
+    "should_trigger": false
+  },
+  {
+    "query": "this postgres query with four joins and a subquery is slow, can you simplify it?",
+    "should_trigger": false
+  },
+  {
+    "query": "our AWS architecture has too many lambdas talking to each other, how should we simplify the system design?",
+    "should_trigger": false
+  },
+  {
+    "query": "convert this JavaScript file to TypeScript and add proper types for the API responses",
+    "should_trigger": false
+  }
+]

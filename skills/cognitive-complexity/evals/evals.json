@@ -1,0 +1,70 @@
+{
+  "skill_name": "cognitive-complexity",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Why is the handler in evals/files/order-handler.ts so hard to follow? Our reviewer says its cognitive complexity is way too high. Break it down for me.",
+      "expected_output": "An explanation built from the scorer's breakdown: handler scores 32, with each increment tied to its line and the deep nesting (customer branch, product loop, nested ternary) named as the main contributors.",
+      "files": ["evals/files/order-handler.ts"],
+      "expectations": [
+        "Ran scripts/score.mjs on the file rather than estimating",
+        "States the handler's score as 32",
+        "Accounts for the increments line by line, including the nesting penalties (e.g. the if at line 24 costs +4 at nesting 3)",
+        "Names the deepest nesting (if/else inside the for...of inside the customer branch) and the nested ternary as the biggest contributors",
+        "Suggests at least two concrete refactors (e.g. guard clauses, extracting the line-pricing loop, a coupon lookup map)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Refactor syncInventory in evals/files/inventory.ts so it passes our complexity limit of 15. Keep the behaviour exactly the same.",
+      "expected_output": "syncInventory rewritten with async/await, guard clauses and small extracted helpers; every function in the file scores 15 or less (ideally 10 or less), with before → after scores reported.",
+      "files": ["evals/files/inventory.ts"],
+      "expectations": [
+        "Reports the before score of syncInventory as 26, computed with the scorer",
+        "Re-ran the scorer after the refactor and reports after scores for syncInventory and every extracted function",
+        "Every function in the refactored file scores 15 or less according to scripts/score.mjs",
+        "The exported signature syncInventory(skus, dryRun) and its resolved value shape are unchanged",
+        "Preserves the dry-run behaviour, the null-qty logging, and the single retry on Throttled, or on Timeout when retryable"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write a TypeScript AWS Lambda handler for POST /refunds: parse the JSON body {orderId, amountCents, reason}, validate it, load the order from DynamoDB via a getOrder(orderId) helper, reject refunds over the order total or on orders older than 30 days, call issueRefund(), and map errors to 400/404/409/500 responses.",
+      "expected_output": "A handler split into small functions (parse/validate, policy checks, error mapping), each scoring 10 or less, with the scorer run before finishing.",
+      "files": [],
+      "expectations": [
+        "Ran scripts/score.mjs on the written file before finishing",
+        "Every function in the produced code scores 10 or less according to scripts/score.mjs",
+        "The handler orchestrates and delegates parsing, validation and error mapping to separate named functions",
+        "Uses guard clauses or early returns instead of nested if/else for validation failures"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Audit evals/files for functions that are too complex for our CI limit of 15 and tell me which ones need work.",
+      "expected_output": "A list of offenders above 15, worst first: handler (32), summarizeReadings (29) and syncInventory (26), each with its top contributors; formatMoney and average are not flagged.",
+      "files": ["evals/files/order-handler.ts", "evals/files/inventory.ts", "evals/files/readings.ts"],
+      "expectations": [
+        "Ran scripts/score.mjs with --threshold 15 on the folder",
+        "Lists handler (32), summarizeReadings (29) and syncInventory (26), worst first",
+        "Does not flag formatMoney or average",
+        "Gives the main contributors for each offender and offers to refactor"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "summarizeReadings in evals/files/readings.ts fails our complexity check (limit 15). Clean it up so it passes.",
+      "expected_output": "summarizeReadings brought to 15 or less (ideally 10 or less) by flattening and extracting helpers, with every literal, signature and quirk preserved. The odd average() that returns a sum is reported as a suspected bug, not changed.",
+      "files": ["evals/files/readings.ts"],
+      "expectations": [
+        "Reports summarizeReadings before → after, with before = 29 computed by scripts/score.mjs",
+        "Every function in the refactored file scores 15 or less according to scripts/score.mjs",
+        "average(a, b) still returns a + b",
+        "The literal 3.14 is kept (not replaced with Math.PI)",
+        "The strings 'fizzbuzz' and ': Missing value!' are unchanged, including casing and punctuation",
+        "The exported names and signatures of average and summarizeReadings are unchanged, and no new input validation or error handling was added",
+        "Mentions that average() returning a sum looks like a bug, without fixing it"
+      ]
+    }
+  ]
+}
