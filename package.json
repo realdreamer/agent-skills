@@ -1,0 +1,16 @@
+{
+  "name": "agent-skills",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "test": "npm test --prefix skills/cognitive-complexity"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15"
+  }
+}
