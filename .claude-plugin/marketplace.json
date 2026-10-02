@@ -1,0 +1,24 @@
+{
+  "name": "realdreamer",
+  "description": "Tested agent skills for TypeScript and serverless AWS developers.",
+  "owner": {
+    "name": "realdreamer",
+    "url": "https://github.com/realdreamer"
+  },
+  "plugins": [
+    {
+      "name": "cognitive-complexity",
+      "source": "./skills/cognitive-complexity",
+      "description": "Keep TS/JS functions readable: a deterministic Cognitive Complexity scorer (SonarSource whitepaper) plus workflows to explain, refactor and audit complex functions.",
+      "author": {
+        "name": "realdreamer",
+        "url": "https://github.com/realdreamer"
+      },
+      "homepage": "https://github.com/realdreamer/agent-skills/tree/main/skills/cognitive-complexity",
+      "repository": "https://github.com/realdreamer/agent-skills",
+      "license": "MIT",
+      "keywords": ["cognitive-complexity", "typescript", "javascript", "refactoring", "code-quality", "sonarjs"],
+      "category": "code-quality"
+    }
+  ]
+}
