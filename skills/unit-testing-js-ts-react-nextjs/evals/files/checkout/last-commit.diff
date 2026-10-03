@@ -1,0 +1,48 @@
+commit 4f2c9e1b7a3d5e8f0c6b2a9d1e7f3c5b8a0d4e62
+Author: Dev <dev@example.com>
+Date:   Thu Oct 1 16:42:10 2026 +0200
+
+    fix(cart): free shipping after discounts, cap fixed coupons at subtotal
+
+    - Free shipping now uses the discounted subtotal. A 5200 cart with a
+      10% coupon (4680) was getting free shipping.
+    - A fixed coupon larger than the subtotal no longer makes the total
+      negative.
+    - Extract subtotal() for the order summary page.
+
+diff --git a/src/lib/cart.ts b/src/lib/cart.ts
+index c6e41a1..35be8c7 100644
+--- a/src/lib/cart.ts
++++ b/src/lib/cart.ts
+@@ -16,21 +16,27 @@ export function addItem(items: Item[], item: Item): Item[] {
+   return items.map((i) => (i.sku === item.sku ? { ...i, qty: Math.min(i.qty + item.qty, MAX_QTY_PER_SKU) } : i));
+ }
+ 
++export function subtotal(items: Item[]): number {
++  return items.reduce((sum, i) => sum + i.priceCents * i.qty, 0);
++}
++
+ export function discount(subtotalCents: number, coupon: Coupon | undefined, now: Date = new Date()): number {
+   if (!coupon) return 0;
+   if (coupon.expiresAt && new Date(coupon.expiresAt) <= now) return 0;
+   if (coupon.minSubtotalCents && subtotalCents < coupon.minSubtotalCents) return 0;
+-  return coupon.kind === 'percent' ? Math.round((subtotalCents * coupon.value) / 100) : coupon.valueCents;
++  const raw = coupon.kind === 'percent' ? Math.round((subtotalCents * coupon.value) / 100) : coupon.valueCents;
++  return Math.min(raw, subtotalCents);
+ }
+ 
+ export function total(items: Item[], coupon?: Coupon, now: Date = new Date()) {
+-  const subtotalCents = items.reduce((sum, i) => sum + i.priceCents * i.qty, 0);
++  const subtotalCents = subtotal(items);
+   const discountCents = discount(subtotalCents, coupon, now);
+-  const shippingCents = subtotalCents === 0 || subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : SHIPPING_CENTS;
++  const discountedCents = subtotalCents - discountCents;
++  const shippingCents = subtotalCents === 0 || discountedCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : SHIPPING_CENTS;
+   return {
+     subtotalCents,
+     discountCents,
+     shippingCents,
+-    totalCents: subtotalCents - discountCents + shippingCents,
++    totalCents: discountedCents + shippingCents,
+   };
+ }

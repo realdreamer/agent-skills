@@ -1,0 +1,81 @@
+{
+  "skill_name": "unit-testing-js-ts-react-nextjs",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write unit tests for my last commit. `git show` output is in evals/files/checkout/last-commit.diff; the file it touched is evals/files/checkout/cart.ts (src/lib/cart.ts in the real repo) and the existing tests are in evals/files/checkout/cart.test.ts. We use Vitest.",
+      "expected_output": "The diff is broken into its behavior changes: free shipping now uses the discounted subtotal (bug fix), fixed coupons are capped at the subtotal (bug fix), and subtotal() is extracted (refactor, no behavior change). Regression tests are added to cart.test.ts for both fixes, with hand-written literal expected values, and the refactor gets no new behavior tests beyond what the existing ones cover.",
+      "files": [
+        "evals/files/checkout/last-commit.diff",
+        "evals/files/checkout/cart.ts",
+        "evals/files/checkout/cart.test.ts"
+      ],
+      "expectations": [
+        "Lists the behavior changes in the diff and identifies the subtotal() extraction as a refactor with no behavior change",
+        "Adds a regression test where a coupon brings the subtotal from at or above 5000 to below 5000 and shipping (495) is charged, e.g. 5200 with 10% off gives totalCents 5175",
+        "Adds a regression test where a fixed coupon larger than the subtotal gives discountCents equal to the subtotal and a total that is not negative",
+        "Expected values are literals, not computed with the same formula as cart.ts",
+        "States which input would have failed on the parent commit for each regression test",
+        "Tests call the exported functions (total, discount) and use no mocks of cart.ts internals"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can you add tests for evals/files/signup/SignupForm.tsx? It's a client component in our Next.js app, Jest + React Testing Library. It has no tests at all yet.",
+      "expected_output": "A SignupForm.test.tsx that drives the form as a user with userEvent and accessible queries, mocks only next/navigation and the network, and covers each validation message, the 409/500/network error messages, the success navigation to /welcome with the posted payload, and the pending state.",
+      "files": ["evals/files/signup/SignupForm.tsx"],
+      "expectations": [
+        "Uses userEvent (userEvent.setup()) rather than fireEvent for typing and clicking",
+        "Finds the submit button with getByRole('button', { name: ... }) and the fields with getByLabelText (or getByRole('textbox', { name })), and the error with getByRole('alert')",
+        "Uses no getByTestId, querySelector or class selectors",
+        "Mocks next/navigation (useRouter) and asserts router.push('/welcome') on success",
+        "Mocks only boundaries (fetch/MSW and next/navigation); does not mock React state or the component's own logic",
+        "Has a test for each validation message: invalid email and password shorter than 8 characters, asserting no request is sent",
+        "Has tests for the 409 message, the generic server error message, and the network error message",
+        "Has a test for the pending state: the button is disabled and reads 'Creating account…' while the request is in flight",
+        "Asserts the request body sent (email and password), not only that fetch was called",
+        "Test names describe behavior under a condition (no names like 'works' or 'renders')"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write tests for our orders API route at evals/files/orders/app/api/orders/[id]/route.ts (GET and DELETE). Context on the app is in evals/files/orders/README.md.",
+      "expected_output": "Route handler tests in the Node environment that call GET and DELETE directly with a Request and a params Promise, mock @/lib/auth and @/lib/db as boundaries, and cover 401, 404 for missing and for another user's order, admin access, the response shape without paymentIntentId, 409 for non-pending cancels, and 204 with the status update on a valid cancel.",
+      "files": ["evals/files/orders/app/api/orders/[id]/route.ts", "evals/files/orders/README.md"],
+      "expectations": [
+        "Sets the Node test environment for the file (// @vitest-environment node or equivalent)",
+        "Calls GET and DELETE directly with a Request and { params: Promise.resolve({ id }) }",
+        "Mocks @/lib/auth and @/lib/db and nothing from the route module itself",
+        "Tests 401 when there is no session",
+        "Tests 404 both for a missing order and for another user's order",
+        "Tests that an admin can read another user's order",
+        "Asserts the GET body does not contain paymentIntentId (or userId)",
+        "Tests 409 when cancelling an order that is not pending, and that no update is written",
+        "Tests 204 on a valid cancel and asserts the update sets status 'cancelled' for that id"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Review the tests in evals/files/newsletter/NewsletterSignup.test.tsx. Coverage says 90% on NewsletterSignup.tsx but I don't trust them. Are they any good and how should we improve them?",
+      "expected_output": "A review that rates the tests weak on protection and on refactor resistance, lists findings with file:line and smell IDs (snapshot-only, own-module-mock, real-wait, call-count-only, waitfor-misuse, no-assertion, name-mismatch, test-id-query, fire-event, shared-state), names the missing behaviors, flags the two source bugs, and shows a rewrite of the worst test.",
+      "files": [
+        "evals/files/newsletter/NewsletterSignup.test.tsx",
+        "evals/files/newsletter/NewsletterSignup.tsx",
+        "evals/files/newsletter/validation.ts",
+        "evals/files/newsletter/analytics.ts"
+      ],
+      "expectations": [
+        "Gives an overall verdict that the tests would not catch real regressions despite the coverage number",
+        "Flags 'handles server failure' as having no assertion",
+        "Flags the snapshot-only 'renders' test",
+        "Flags the spying on or mocking of isValidEmail as testing an implementation detail or mocking the unit's own logic",
+        "Flags 'button disabled' as asserting the opposite of its name (it checks the button is enabled)",
+        "Flags the real 500 ms sleep and the side effect (click) inside waitFor",
+        "Flags getByTestId/querySelector and fireEvent usage and recommends getByRole/getByLabelText and userEvent",
+        "Lists missing behaviors including the success message, the analytics event on success, the request URL containing listId, and the pending state",
+        "Reports that a rejected fetch leaves the component stuck in 'pending' with no message (a source bug, not fixed silently)",
+        "Includes a rewritten version of at least one test using userEvent, getByLabelText('Email') for the input and getByRole('button', { name: 'Subscribe' }) for the button, with no getByTestId"
+      ]
+    }
+  ]
+}

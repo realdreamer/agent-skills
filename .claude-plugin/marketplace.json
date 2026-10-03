@@ -19,6 +19,20 @@
       "license": "MIT",
       "keywords": ["cognitive-complexity", "typescript", "javascript", "refactoring", "code-quality", "sonarjs"],
       "category": "code-quality"
+    },
+    {
+      "name": "unit-testing-js-ts-react-nextjs",
+      "source": "./skills/unit-testing-js-ts-react-nextjs",
+      "description": "Behavior-first unit tests for JS/TS, React and Next.js with Jest, Vitest and React Testing Library: write tests for code or a commit/branch, and review existing tests against the four pillars of a good unit test.",
+      "author": {
+        "name": "realdreamer",
+        "url": "https://github.com/realdreamer"
+      },
+      "homepage": "https://github.com/realdreamer/agent-skills/tree/main/skills/unit-testing-js-ts-react-nextjs",
+      "repository": "https://github.com/realdreamer/agent-skills",
+      "license": "MIT",
+      "keywords": ["unit-testing", "jest", "vitest", "react-testing-library", "nextjs", "typescript", "javascript"],
+      "category": "testing"
     }
   ]
 }
