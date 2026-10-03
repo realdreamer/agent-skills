@@ -1,6 +1,6 @@
 # agent-skills
 
-Agent skills (`SKILL.md` format) for TypeScript and serverless AWS developers. They work with Claude Code, and with any agent that loads `SKILL.md` skills.
+Agent skills (`SKILL.md` format) for TypeScript and JavaScript developers. They work with Claude Code, and with any agent that loads `SKILL.md` skills.
 
 Each skill here:
 
