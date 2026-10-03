@@ -1,0 +1,82 @@
+[
+  {
+    "query": "write unit tests for src/lib/pricing.ts, we're on vitest. I want the edge cases covered properly not just the happy path",
+    "should_trigger": true
+  },
+  {
+    "query": "can you write tests for the changes on my branch feature/checkout-coupons before I open the PR",
+    "should_trigger": true
+  },
+  {
+    "query": "add tests for commit 8e1f2a3, it fixed the date rounding bug in useBookingCalendar",
+    "should_trigger": true
+  },
+  {
+    "query": "our ProfileForm.test.tsx breaks every time someone touches the markup even though the form still works. what's wrong with these tests?",
+    "should_trigger": true
+  },
+  {
+    "query": "review the tests under components/cart/__tests__ — are they actually testing anything useful? lots of snapshots and mocks in there",
+    "should_trigger": true
+  },
+  {
+    "query": "sonar says coverage on app/api/invoices/route.ts is 34%, need to get it above 80 for the quality gate. jest + next 15",
+    "should_trigger": true
+  },
+  {
+    "query": "how do I test a next.js server action that calls revalidatePath and redirect? my jest test keeps throwing NEXT_REDIRECT",
+    "should_trigger": true
+  },
+  {
+    "query": "write RTL tests for the useDebouncedSearch hook and the SearchBox component that uses it, it calls /api/search after 300ms",
+    "should_trigger": true
+  },
+  {
+    "query": "what test cases am I missing for the LoginForm? I only test the happy path right now",
+    "should_trigger": true
+  },
+  {
+    "query": "my vitest tests pass alone but fail when I run the whole suite, something about fetch mock still returning the old value",
+    "should_trigger": true
+  },
+  {
+    "query": "set up Playwright for our Next.js app and write an e2e test that logs in and completes checkout",
+    "should_trigger": false
+  },
+  {
+    "query": "our GitHub Actions workflow runs jest but the job times out after 10 minutes on the install step, how do I cache node_modules?",
+    "should_trigger": false
+  },
+  {
+    "query": "write a k6 load test for POST /api/orders that ramps to 500 virtual users",
+    "should_trigger": false
+  },
+  {
+    "query": "migrate our project from webpack to vite, we have about 40 entry points",
+    "should_trigger": false
+  },
+  {
+    "query": "the SignupForm component throws 'Cannot read properties of undefined (reading map)' in production when the API returns no plans, fix it",
+    "should_trigger": false
+  },
+  {
+    "query": "write pytest tests for the FastAPI /users endpoint with an in-memory sqlite db",
+    "should_trigger": false
+  },
+  {
+    "query": "add Storybook stories for all variants of our Button component",
+    "should_trigger": false
+  },
+  {
+    "query": "review this PR for security issues, it adds a file upload endpoint in app/api/upload/route.ts",
+    "should_trigger": false
+  },
+  {
+    "query": "explain what React's useEffect cleanup function does and when it runs",
+    "should_trigger": false
+  },
+  {
+    "query": "refactor the checkout reducer into smaller functions, keep behaviour the same",
+    "should_trigger": false
+  }
+]

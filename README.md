@@ -13,6 +13,7 @@ Each skill here:
 | Skill | What it does |
 |---|---|
 | [`cognitive-complexity`](skills/cognitive-complexity/SKILL.md) | Keeps TS/JS functions under a Cognitive Complexity limit while writing code. Explains a function's score line by line, refactors it with before → after scores, and audits changed files or a folder. Scores come from a bundled scorer that implements the SonarSource whitepaper. |
+| [`unit-testing-js-ts-react-nextjs`](skills/unit-testing-js-ts-react-nextjs/SKILL.md) | Writes and reviews behavior-first unit tests for JS/TS, React and Next.js with Jest, Vitest and React Testing Library. Writes tests for a file, a commit, a branch or a PR; reviews existing tests against the four pillars of a good unit test. Proves each test can fail with a sabotage check instead of trusting coverage. |
 
 ## Install
 
@@ -21,6 +22,7 @@ Each skill here:
 ```
 /plugin marketplace add realdreamer/agent-skills
 /plugin install cognitive-complexity@realdreamer
+/plugin install unit-testing-js-ts-react-nextjs@realdreamer
 ```
 
 Claude Code installs the scorer's npm dependencies automatically when it installs the plugin.
@@ -93,6 +95,27 @@ Exit codes: `0` ok, `1` threshold exceeded, `2` usage or parse error. Directorie
 - Biome's `noExcessiveCognitiveComplexity` departs from the whitepaper in several places. With `--biome`, 721 of 733 real-world functions matched Biome exactly and the rest scored higher, never lower. Details: [scoring-rules.md](skills/cognitive-complexity/references/scoring-rules.md).
 
 Dependencies: `@typescript-eslint/typescript-estree` and `typescript`, pinned in the lockfile.
+
+## unit-testing-js-ts-react-nextjs
+
+Tests are judged by whether they go red when a behavior breaks, not by coverage. The *user* of a unit is whoever consumes it: a person for a component, the calling code for a module, an HTTP client for a route handler. Tests act the way that user does.
+
+The agent uses it to:
+
+- **write** tests for a module, component, hook, route handler or server action. It builds a behavior inventory from the public interface first (happy path, boundaries, failures, state over time, permissions, time), then writes tests through that interface, mocking only at the boundaries.
+- **write tests for a change**: a commit, a branch, a PR or uncommitted work. It splits the diff into behavior changes, adds a regression test for each bug fix, and leaves pure refactors to the existing tests.
+- **review** existing tests: a rating on each of the four pillars, findings with `file:line` and a smell ID from a catalog of 22, the behaviors that are missing or only weakly covered, and a rewrite of the worst test.
+
+Instead of trusting a test because it passes, the skill runs a **sabotage check**: it breaks the behavior in the source, confirms the test goes red, and restores the source. Where the project already uses [Stryker](https://stryker-mutator.io/), it runs mutation testing on the files in scope instead.
+
+The rules come from:
+
+- Vladimir Khorikov, *Unit Testing Principles, Practices, and Patterns*: the four pillars (protection against regressions, resistance to refactoring, fast feedback, maintainability), observable behavior vs implementation details, and mocking only unmanaged dependencies.
+- Kent C. Dodds and [Testing Library's guiding principle](https://testing-library.com/docs/guiding-principles): tests that resemble how the software is used, and query priority by accessibility.
+- Kent Beck's [Test Desiderata](https://testdesiderata.com/), and Ian Cooper's "TDD, where did it all go wrong": a new behavior, not a new method, is what earns a new test.
+- *Software Engineering at Google*, chapters 11–14: test behaviors via public APIs, prefer state over interaction verification, DAMP over DRY.
+
+Next.js coverage follows the official [Vitest](https://nextjs.org/docs/app/guides/testing/vitest) and [Jest](https://nextjs.org/docs/app/guides/testing/jest) guides, including their limit: `async` Server Components are left to E2E tests, and their logic is extracted into functions the skill can unit test.
 
 ## Repository layout
 
