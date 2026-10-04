@@ -27,6 +27,14 @@ Each skill here:
 
 Claude Code installs the scorer's npm dependencies automatically when it installs the plugin.
 
+### Codex and other agents
+
+```bash
+npx skills@latest add realdreamer/agent-skills
+```
+
+Pick the skills and the agents to install them on. Each skill ships an `agents/openai.yaml` with its display name in Codex. For `cognitive-complexity`, install the scorer's dependencies once afterwards (see below).
+
 ### Any agent (copy the folder)
 
 Copy `skills/cognitive-complexity/` into your agent's skills directory (for Claude Code: `~/.claude/skills/` or `.claude/skills/` in a project). Then install the scorer's dependencies once:
