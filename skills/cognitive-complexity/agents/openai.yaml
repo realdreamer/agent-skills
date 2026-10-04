@@ -1,0 +1,3 @@
+interface:
+  display_name: "Cognitive Complexity"
+  short_description: "Score and flatten complex TS/JS functions"
