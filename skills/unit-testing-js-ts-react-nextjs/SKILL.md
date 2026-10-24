@@ -1,6 +1,6 @@
 ---
 name: unit-testing-js-ts-react-nextjs
-description: Behavior-first unit tests for JavaScript/TypeScript, React and Next.js with Jest, Vitest and React Testing Library, judged by whether they catch real regressions rather than by coverage. Use when writing tests for a module, component, hook, route handler or server action; writing tests for a commit, branch, PR or diff; reviewing or auditing existing tests (brittle, over-mocked, snapshot-heavy, testing implementation details, flaky); or when asked to raise coverage or find missing test cases.
+description: Unit tests that catch real regressions, not just coverage, for software developers and QA engineers. Writes and reviews behavior-first tests for JavaScript/TypeScript, React and Next.js with Jest, Vitest and React Testing Library. Use when writing tests for a module, component, hook, route handler or server action; writing tests for a commit, branch, PR or diff; reviewing or auditing existing tests (brittle, over-mocked, snapshot-heavy, testing implementation details, flaky); or when asked to raise coverage or find missing test cases.
 ---
 
 # Unit testing: JavaScript, TypeScript, React and Next.js
