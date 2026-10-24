@@ -1,6 +1,30 @@
 # agent-skills
 
-Agent skills (`SKILL.md` format) for TypeScript and JavaScript developers. They work with Claude Code, and with any agent that loads `SKILL.md` skills.
+[![CI](https://github.com/realdreamer/agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/realdreamer/agent-skills/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-d97757)](#claude-code-plugin)
+[![SKILL.md](https://img.shields.io/badge/format-SKILL.md-555)](#codex-and-other-agents)
+
+Agent skills (`SKILL.md` format) for TypeScript and JavaScript developers. They work with Claude Code, Codex, and any agent that loads `SKILL.md` skills.
+
+```
+/plugin marketplace add realdreamer/agent-skills      # Claude Code
+npx skills@latest add realdreamer/agent-skills        # Codex and other agents
+```
+
+### Why trust them
+
+- **`cognitive-complexity` matches the SonarSource whitepaper line by line**, on every example in it. On ~3,900 real-world TS/TSX functions it agrees with `eslint-plugin-sonarjs` wherever both follow the same rules, and with `--biome` it matches Biome exactly on 721 of 733 functions. Your agent stops guessing scores.
+- **`unit-testing-js-ts-react-nextjs` proves every test can fail.** It breaks the behavior in the source, checks the test goes red, then restores the source (or runs Stryker where the project uses it). Passing tests that check nothing don't survive.
+
+### Try it
+
+After installing, ask your agent things like:
+
+- *"Why is `handler` in order-handler.ts so complex? Get it under 15 without changing behavior."*
+- *"Audit the files changed on this branch for functions over our sonarjs limit."*
+- *"Write unit tests for src/lib/pricing.ts, we're on Vitest. Cover the edge cases, not just the happy path."*
+- *"Review the tests in components/cart/\_\_tests\_\_. Are they testing anything useful?"*
 
 Each skill here:
 

@@ -1,6 +1,6 @@
 ---
 name: cognitive-complexity
-description: Cognitive complexity (SonarSource metric) for TypeScript/JavaScript, computed by a bundled scorer instead of estimated. Use when writing or refactoring TS/JS functions so they stay readable, when asked why a function is complex or hard to follow, how to simplify or flatten deeply nested code, to fix a sonarjs/cognitive-complexity or Biome noExcessiveCognitiveComplexity lint failure, or to audit changed files or a folder for overly complex functions.
+description: Keeps TypeScript/JavaScript functions readable for software developers by computing SonarSource Cognitive Complexity with a bundled scorer instead of estimating it, then explaining, refactoring and auditing complex code. Use when writing or refactoring TS/JS functions so they stay readable, when asked why a function is complex or hard to follow, how to simplify or flatten deeply nested code, to fix a sonarjs/cognitive-complexity or Biome noExcessiveCognitiveComplexity lint failure, or to audit changed files or a folder for overly complex functions.
 ---
 
 # Cognitive complexity
